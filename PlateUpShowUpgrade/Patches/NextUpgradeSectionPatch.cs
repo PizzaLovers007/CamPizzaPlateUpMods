@@ -6,7 +6,7 @@ using static KitchenData.Appliance;
 namespace PlateUpShowUpgrade.Patches
 {
     [HarmonyPatch]
-    public class NextUpgradeIndicatorPatch
+    public class NextUpgradeSectionPatch
     {
         [HarmonyPatch(typeof(Appliance), "Localise")]
         [HarmonyPostfix]
