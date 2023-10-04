@@ -54,7 +54,8 @@ namespace PlateUpShowUpgrade.Patches
                 ___ScheduledCustomers.ToComponentDataArray<CScheduledCustomer>(Allocator.Temp);
 
             int queueSize = Queuers.CalculateEntityCount();
-            for (int i = 0; i < Math.Min(nativeArray.Length, 30 - queueSize); i++) {
+            int groupsToSpawn = 30 - queueSize;
+            for (int i = 0; i < nativeArray.Length && groupsToSpawn > 0; i++) {
                 Entity entity = nativeArray[i];
                 CScheduledCustomer cScheduledCustomer = nativeArray2[i];
                 if (singleton.TimeOfDayUnbounded > cScheduledCustomer.TimeOfDay) {
@@ -71,6 +72,7 @@ namespace PlateUpShowUpgrade.Patches
                                 cScheduledCustomer.IsCat });
                     }
                     __instance.EntityManager.DestroyEntity(entity);
+                    groupsToSpawn--;
                 }
             }
 
