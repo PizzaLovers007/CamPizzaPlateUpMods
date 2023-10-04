@@ -2,6 +2,8 @@
 using System.Reflection;
 using HarmonyLib;
 using Kitchen;
+using KitchenData;
+using Unity.Collections;
 using Unity.Entities;
 
 namespace PlateUpShowUpgrade.Patches
@@ -10,7 +12,23 @@ namespace PlateUpShowUpgrade.Patches
     public class LimitCustomerSpawnsPatch
     {
         private static readonly MethodInfo GetEntityQueryMethod =
-            AccessTools.Method(typeof(CreateCustomerGroup), "GetEntityQuery", new Type[] { typeof(ComponentType).MakeArrayType() });
+            AccessTools.Method(
+                typeof(CreateCustomerGroup),
+                "GetEntityQuery",
+                new Type[] { typeof(ComponentType).MakeArrayType() });
+
+        private static readonly MethodInfo RequireMethod =
+            AccessTools.FirstMethod(
+                    typeof(GenericSystemBase),
+                    info => info.Name == "Require"
+                        && info.GetParameters().Length == 2
+                        && info.GetGenericArguments().Length == 1
+                        && info.GetParameters()[1].ParameterType.GetElementType() == info.GetGenericArguments()[0]
+                    )
+                .MakeGenericMethod(typeof(CCustomerType));
+
+        private static readonly MethodInfo NewGroupMethod =
+            AccessTools.Method(typeof(CreateCustomerGroup), "NewGroup");
 
         private static EntityQuery Queuers;
 
@@ -25,9 +43,38 @@ namespace PlateUpShowUpgrade.Patches
 
         [HarmonyPatch(typeof(CreateCustomerGroup), "OnUpdate")]
         [HarmonyPrefix]
-        public static bool OnUpdate() {
-            int peopleInQueue = Queuers.CalculateEntityCount();
-            return peopleInQueue < 30;
+        public static bool OnUpdate(
+                CreateCustomerGroup __instance,
+                EntityQuery ___ScheduledCustomers,
+                EntityQuery ____SingletonEntityQuery_STime_0) {
+            STime singleton = ____SingletonEntityQuery_STime_0.GetSingleton<STime>();
+            using NativeArray<Entity> nativeArray =
+                ___ScheduledCustomers.ToEntityArray(Allocator.Temp);
+            using NativeArray<CScheduledCustomer> nativeArray2 =
+                ___ScheduledCustomers.ToComponentDataArray<CScheduledCustomer>(Allocator.Temp);
+
+            int queueSize = Queuers.CalculateEntityCount();
+            for (int i = 0; i < Math.Min(nativeArray.Length, 30 - queueSize); i++) {
+                Entity entity = nativeArray[i];
+                CScheduledCustomer cScheduledCustomer = nativeArray2[i];
+                if (singleton.TimeOfDayUnbounded > cScheduledCustomer.TimeOfDay) {
+                    object[] requireParams = new object[] { entity, null };
+                    bool requireResult = (bool)RequireMethod.Invoke(__instance, requireParams);
+                    CCustomerType comp = (CCustomerType)requireParams[1];
+                    int id = requireResult ? comp.Type : 0;
+                    if (GameData.Main.TryGet<CustomerType>(id, out var output)) {
+                        NewGroupMethod.Invoke(
+                            __instance,
+                            new object[] {
+                                output,
+                                cScheduledCustomer.GroupSize,
+                                cScheduledCustomer.IsCat });
+                    }
+                    __instance.EntityManager.DestroyEntity(entity);
+                }
+            }
+
+            return false;
         }
     }
 }
