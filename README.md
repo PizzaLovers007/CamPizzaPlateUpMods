@@ -1,3 +1,3 @@
 # CamPizza PlateUp! Mods
 
-Collection of PlateUp! mods created by @arpakasso and @PizzaLovers007.
+Collection of PlateUp! mods created by [arpakasso](https://www.github.com/arpakasso) and [PizzaLovers007](https://www.github.com/PizzaLovers007).
