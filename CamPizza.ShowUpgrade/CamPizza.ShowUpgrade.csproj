@@ -10,8 +10,4 @@
     <PackageReference Include="Yariazen.PlateUp.ModBuildUtilities" Version="1.10.21" />
   </ItemGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\CamPizza.Core\CamPizza.Core.csproj" />
-  </ItemGroup>
-
 </Project>
