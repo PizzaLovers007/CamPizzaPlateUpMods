@@ -2,11 +2,11 @@
 using HarmonyLib;
 using KitchenMods;
 
-namespace PlateUpShowUpgrade
+namespace CamPizza.BetterCustomerPerformance
 {
     public class Startup : IModInitializer
     {
-        private readonly Harmony harmony = new Harmony("plateupshowupgrade");
+        private readonly Harmony harmony = new Harmony("campizza.bettercustomerperformance");
 
         public void PostActivate(Mod mod) {
             harmony.PatchAll(Assembly.GetExecutingAssembly());

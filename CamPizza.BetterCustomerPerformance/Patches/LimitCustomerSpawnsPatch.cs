@@ -6,7 +6,7 @@ using KitchenData;
 using Unity.Collections;
 using Unity.Entities;
 
-namespace PlateUpShowUpgrade.Patches
+namespace CamPizza.BetterCustomerPerformance.Patches
 {
     [HarmonyPatch]
     public class LimitCustomerSpawnsPatch

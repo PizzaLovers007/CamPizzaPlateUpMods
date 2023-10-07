@@ -3,7 +3,7 @@ using HarmonyLib;
 using KitchenData;
 using static KitchenData.Appliance;
 
-namespace PlateUpShowUpgrade.Patches
+namespace CamPizza.ShowUpgrade.Patches
 {
     [HarmonyPatch]
     public class NextUpgradeSectionPatch
