@@ -17,7 +17,3 @@ gameplay.
 ### ShowUpgrade
 
 Shows the next possible upgrade(s) for a blueprint in the popup.
-
-### Core
-
-Allows CamPizza mods to fully function. Not an actual mod.
