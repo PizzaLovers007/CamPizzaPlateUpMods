@@ -10,9 +10,8 @@ Collection of PlateUp! mods created by
 
 Significantly improves the performance when there are a lot of customers.
 
-This is done by capping the queue size to 30, which can potentially affect some
-calculations. From testing, there doesn't seem to be any noticeable changes in
-gameplay.
+This is done by hiding customers beyond the 30th position. It does not change
+anything related to queue patience, calling customers early, etc.
 
 ### ShowUpgrade
 
