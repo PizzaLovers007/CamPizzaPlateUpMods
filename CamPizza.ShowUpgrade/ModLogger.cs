@@ -1,7 +1,7 @@
 ﻿using System.Diagnostics;
 using Kitchen;
 
-namespace CamPizza.BetterCustomerPerformance
+namespace CamPizza.ShowUpgrade
 {
     public static class ModLogger
     {
