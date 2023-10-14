@@ -14,8 +14,17 @@ namespace CamPizza.ShowUpgrade.Patches
             if (!__instance.HasUpgrades) {
                 return;
             }
+
+            if (__instance.Upgrades.Count == 1) {
+                __instance.Sections.Add(new Section {
+                    Title = "Next Upgrade",
+                    Description = __instance.Upgrades.Single().Name,
+                    RangeDescription = ""
+                });
+                return;
+            }
             __instance.Sections.Add(new Section {
-                Title = "Next Upgrade",
+                Title = "Possible Upgrades",
                 Description =
                     string.Join(", ", __instance.Upgrades.Select(app => app.Name).ToList()),
                 RangeDescription = ""
