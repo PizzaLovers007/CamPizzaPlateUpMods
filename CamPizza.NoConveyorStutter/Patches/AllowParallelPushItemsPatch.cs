@@ -47,6 +47,14 @@ namespace CamPizza.NoConveyorStutter.Patches
             }
         }
 
+        [HarmonyPatch(typeof(PushItems), "OnUpdate")]
+        [HarmonyPostfix]
+        public static void OnUpdatePostfix() {
+            if (updatingPositionsSet.Count > 0) {
+                ModLogger.Log($"Push happened! {string.Join(", ", updatingPositionsSet)}");
+            }
+        }
+
         private static Vector3 CalculatePushingPosition(
                 Entity e, CPosition pos, CConveyPushItems push) {
             if (pushItemsInstance == null) {

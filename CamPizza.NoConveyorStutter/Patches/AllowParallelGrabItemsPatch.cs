@@ -12,6 +12,12 @@ namespace CamPizza.NoConveyorStutter.Patches
 
         private static bool prevHasPerformedAction;
 
+        [HarmonyPatch(typeof(GrabItems), "OnUpdate")]
+        [HarmonyPrefix]
+        public static void OnUpdatePrefix() {
+            updatingPositionsSet.Clear();
+        }
+
         [HarmonyPatch("Kitchen.GrabItems+<>c__DisplayClass_OnUpdate_LambdaJob0, KitchenMode", "OriginalLambdaBody")]
         [HarmonyPrefix]
         public static void OriginalLambdaBodyPrefix(
@@ -29,6 +35,14 @@ namespace CamPizza.NoConveyorStutter.Patches
             if (___has_performed_action != prevHasPerformedAction) {
                 Vector3 grabPos = CalculateGrabPosition(pos);
                 updatingPositionsSet.Add(grabPos);
+            }
+        }
+
+        [HarmonyPatch(typeof(GrabItems), "OnUpdate")]
+        [HarmonyPostfix]
+        public static void OnUpdatePostfix() {
+            if (updatingPositionsSet.Count > 0) {
+                ModLogger.Log($"Grab happened! {string.Join(", ", updatingPositionsSet)}");
             }
         }
 
