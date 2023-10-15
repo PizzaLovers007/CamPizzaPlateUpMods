@@ -13,6 +13,12 @@ Significantly improves the performance when there are a lot of customers.
 This is done by hiding customers beyond the 30th position. It does not change
 anything related to queue patience, calling customers early, etc.
 
+### NoConveyorStutter
+
+Stops conveyors/grabbers from stuttering in massively automated restaurants.
+
+![image](./CamPizza.NoConveyorStutter/example.gif)
+
 ### ShowUpgrade
 
 Shows the next possible upgrade(s) for a blueprint in the popup.
