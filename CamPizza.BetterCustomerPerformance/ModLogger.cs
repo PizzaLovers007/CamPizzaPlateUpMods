@@ -20,7 +20,7 @@ namespace CamPizza.BetterCustomerPerformance
             if (!debugging) {
                 return;
             }
-            Logger.Log(LogSource.Generic, $"[BetterCustomerPerformance] " + message);
+            Debug.Log($"[BetterCustomerPerformance] " + message);
         }
     }
 }
