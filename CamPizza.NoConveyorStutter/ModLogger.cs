@@ -1,5 +1,4 @@
 ﻿using System.Diagnostics;
-using Kitchen;
 
 namespace CamPizza.NoConveyorStutter
 {
@@ -20,7 +19,7 @@ namespace CamPizza.NoConveyorStutter
             if (!debugging) {
                 return;
             }
-            Logger.Log(LogSource.Generic, $"[NoConveyorStutter] " + message);
+            Debug.Log($"[NoConveyorStutter] {message}");
         }
     }
 }

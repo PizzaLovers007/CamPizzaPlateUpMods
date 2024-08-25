@@ -1,5 +1,4 @@
 ﻿using System.Diagnostics;
-using Kitchen;
 
 namespace CamPizza.ShowUpgrade
 {
@@ -20,7 +19,7 @@ namespace CamPizza.ShowUpgrade
             if (!debugging) {
                 return;
             }
-            Logger.Log(LogSource.Generic, $"[ShowUpgrade] " + message);
+            Debug.Log($"[ShowUpgrade] {message}");
         }
     }
 }
