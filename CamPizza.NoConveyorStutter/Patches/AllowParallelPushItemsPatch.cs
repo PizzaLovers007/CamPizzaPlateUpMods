@@ -21,31 +21,31 @@ namespace CamPizza.NoConveyorStutter.Patches
             updatingPositionsSet.Clear();
         }
 
-        [HarmonyPatch("Kitchen.PushItems+<>c__DisplayClass_OnUpdate_LambdaJob0, KitchenMode", "OriginalLambdaBody")]
-        [HarmonyPrefix]
-        public static void OriginalLambdaBodyPrefix(
-                ref bool ___has_performed_action,
-                Entity e,
-                CPosition pos,
-                CConveyPushItems push) {
-            Vector3 pushPos = CalculatePushingPosition(e, pos, push);
-            ___has_performed_action = updatingPositionsSet.Contains(pushPos);
+        //[HarmonyPatch("Kitchen.PushItems+<>c__DisplayClass_OnUpdate_LambdaJob0, KitchenMode", "OriginalLambdaBody")]
+        //[HarmonyPrefix]
+        //public static void OriginalLambdaBodyPrefix(
+        //        ref bool ___has_performed_action,
+        //        Entity e,
+        //        CPosition pos,
+        //        CConveyPushItems push) {
+        //    Vector3 pushPos = CalculatePushingPosition(e, pos, push);
+        //    ___has_performed_action = updatingPositionsSet.Contains(pushPos);
 
-            prevHasPerformedAction = ___has_performed_action;
-        }
+        //    prevHasPerformedAction = ___has_performed_action;
+        //}
 
-        [HarmonyPatch("Kitchen.PushItems+<>c__DisplayClass_OnUpdate_LambdaJob0, KitchenMode", "OriginalLambdaBody")]
-        [HarmonyPostfix]
-        public static void OriginalLambdaBodyPostfix(
-                bool ___has_performed_action,
-                Entity e,
-                CPosition pos,
-                CConveyPushItems push) {
-            if (___has_performed_action != prevHasPerformedAction) {
-                Vector3 pushPos = CalculatePushingPosition(e, pos, push);
-                updatingPositionsSet.Add(pushPos);
-            }
-        }
+        //[HarmonyPatch("Kitchen.PushItems+<>c__DisplayClass_OnUpdate_LambdaJob0, KitchenMode", "OriginalLambdaBody")]
+        //[HarmonyPostfix]
+        //public static void OriginalLambdaBodyPostfix(
+        //        bool ___has_performed_action,
+        //        Entity e,
+        //        CPosition pos,
+        //        CConveyPushItems push) {
+        //    if (___has_performed_action != prevHasPerformedAction) {
+        //        Vector3 pushPos = CalculatePushingPosition(e, pos, push);
+        //        updatingPositionsSet.Add(pushPos);
+        //    }
+        //}
 
         [HarmonyPatch(typeof(PushItems), "OnUpdate")]
         [HarmonyPostfix]

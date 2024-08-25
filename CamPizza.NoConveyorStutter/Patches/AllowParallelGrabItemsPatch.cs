@@ -18,25 +18,28 @@ namespace CamPizza.NoConveyorStutter.Patches
             updatingPositionsSet.Clear();
         }
 
-        [HarmonyPatch("Kitchen.GrabItems+<>c__DisplayClass_OnUpdate_LambdaJob0, KitchenMode", "OriginalLambdaBody")]
-        [HarmonyPrefix]
-        public static void OriginalLambdaBodyPrefix(
-                ref bool ___has_performed_action, CPosition pos) {
-            Vector3 grabPos = CalculateGrabPosition(pos);
-            ___has_performed_action = updatingPositionsSet.Contains(grabPos);
+        // Patches (and this mod as a whole) are no longer neceesary as the base
+        // game tracks used tiles now rather than with a single boolean.
 
-            prevHasPerformedAction = ___has_performed_action;
-        }
+        //[HarmonyPatch("Kitchen.GrabItems+<>c__DisplayClass_OnUpdate_LambdaJob0, KitchenMode", "OriginalLambdaBody")]
+        //[HarmonyPrefix]
+        //public static void OriginalLambdaBodyPrefix(
+        //        ref bool ___has_performed_action, CPosition pos) {
+        //    Vector3 grabPos = CalculateGrabPosition(pos);
+        //    ___has_performed_action = updatingPositionsSet.Contains(grabPos);
 
-        [HarmonyPatch("Kitchen.GrabItems+<>c__DisplayClass_OnUpdate_LambdaJob0, KitchenMode", "OriginalLambdaBody")]
-        [HarmonyPostfix]
-        public static void OriginalLambdaBodyPostfix(
-                bool ___has_performed_action, CPosition pos) {
-            if (___has_performed_action != prevHasPerformedAction) {
-                Vector3 grabPos = CalculateGrabPosition(pos);
-                updatingPositionsSet.Add(grabPos);
-            }
-        }
+        //    prevHasPerformedAction = ___has_performed_action;
+        //}
+
+        //[HarmonyPatch("Kitchen.GrabItems+<>c__DisplayClass_OnUpdate_LambdaJob0, KitchenMode", "OriginalLambdaBody")]
+        //[HarmonyPostfix]
+        //public static void OriginalLambdaBodyPostfix(
+        //        bool ___has_performed_action, CPosition pos) {
+        //    if (___has_performed_action != prevHasPerformedAction) {
+        //        Vector3 grabPos = CalculateGrabPosition(pos);
+        //        updatingPositionsSet.Add(grabPos);
+        //    }
+        //}
 
         [HarmonyPatch(typeof(GrabItems), "OnUpdate")]
         [HarmonyPostfix]
