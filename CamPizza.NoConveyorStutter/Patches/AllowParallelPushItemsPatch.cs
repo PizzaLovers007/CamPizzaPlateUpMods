@@ -21,6 +21,9 @@ namespace CamPizza.NoConveyorStutter.Patches
             updatingPositionsSet.Clear();
         }
 
+        // Patches (and this mod as a whole) are no longer neceesary as the base
+        // game tracks used tiles now rather than with a single boolean.
+
         //[HarmonyPatch("Kitchen.PushItems+<>c__DisplayClass_OnUpdate_LambdaJob0, KitchenMode", "OriginalLambdaBody")]
         //[HarmonyPrefix]
         //public static void OriginalLambdaBodyPrefix(
