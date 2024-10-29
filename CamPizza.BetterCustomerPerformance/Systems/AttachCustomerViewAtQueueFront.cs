@@ -10,6 +10,7 @@ namespace CamPizza.BetterCustomerPerformance.Systems
     public class AttachCustomerViewAtQueueFront : DaySystem, IModSystem
     {
         private EntityQuery HiddenGroups;
+        private int lastHidden = -1;
 
         protected override void Initialise() {
             base.Initialise();
@@ -17,24 +18,23 @@ namespace CamPizza.BetterCustomerPerformance.Systems
             HiddenGroups =
                 GetEntityQuery(
                     new QueryHelper()
-                        .All(typeof(CQueuePosition))
+                        .All(typeof(CCustomerGroup))
                         .None(typeof(CDidAttachCustomerView)));
         }
 
         protected override void OnUpdate() {
             using NativeArray<Entity> hiddenGroups = HiddenGroups.ToEntityArray(Allocator.Temp);
-            using NativeArray<CQueuePosition> queuePositions =
-                HiddenGroups.ToComponentDataArray<CQueuePosition>(Allocator.Temp);
 
-            if (hiddenGroups.Length > 0) {
+            if (hiddenGroups.Length > 0 && lastHidden != hiddenGroups.Length) {
+                lastHidden = hiddenGroups.Length;
                 ModLogger.Log($"Pending hidden groups... ({hiddenGroups.Length} to go)");
             }
 
             for (int i = 0; i < hiddenGroups.Length; i++) {
                 var group = hiddenGroups[i];
-                var queuePosition = queuePositions[i];
 
-                if (queuePosition.QueuePosition > 30) {
+                if (HasComponent<CQueuePosition>(group)
+                        && GetComponent<CQueuePosition>(group).QueuePosition > 30) {
                     continue;
                 }
 
