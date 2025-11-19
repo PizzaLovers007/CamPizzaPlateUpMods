@@ -19,7 +19,7 @@ namespace CamPizza.NoConveyorStutter
             if (!debugging) {
                 return;
             }
-            Debug.Log($"[NoConveyorStutter] {message}");
+            UnityEngine.Debug.Log($"[NoConveyorStutter] {message}");
         }
     }
 }

@@ -19,7 +19,7 @@ namespace CamPizza.BetterCustomerPerformance
             if (!debugging) {
                 return;
             }
-            Debug.Log($"[BetterCustomerPerformance] {message}");
+            UnityEngine.Debug.Log($"[BetterCustomerPerformance] {message}");
         }
     }
 }

@@ -19,7 +19,7 @@ namespace CamPizza.ShowUpgrade
             if (!debugging) {
                 return;
             }
-            Debug.Log($"[ShowUpgrade] {message}");
+            UnityEngine.Debug.Log($"[ShowUpgrade] {message}");
         }
     }
 }
